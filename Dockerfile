@@ -3,18 +3,21 @@ FROM php:8.2-apache
 # Install MySQL extensions
 RUN docker-php-ext-install mysqli pdo_mysql
 
-# Disable conflicting Apache MPM modules
-RUN a2dismod mpm_event || true
-RUN a2dismod mpm_worker || true
+# Remove ALL enabled Apache MPM configurations
+RUN rm -f /etc/apache2/mods-enabled/mpm_*.load \
+          /etc/apache2/mods-enabled/mpm_*.conf
 
-# Enable the correct MPM and rewrite
-RUN a2enmod mpm_prefork rewrite
+# Enable only prefork MPM
+RUN a2enmod mpm_prefork
 
-# Copy project files
+# Enable URL rewriting
+RUN a2enmod rewrite
+
+# Copy PHP project
 COPY . /var/www/html/
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html
 
-# Configure Railway port and start Apache
+# Configure and start Apache
 CMD ["sh", "-c", "PORT=${PORT:-8080}; sed -i \"s/^Listen 80$/Listen ${PORT}/\" /etc/apache2/ports.conf; sed -i \"s#<VirtualHost \\*:80>#<VirtualHost *:${PORT}>#\" /etc/apache2/sites-available/000-default.conf; apache2-foreground"]
