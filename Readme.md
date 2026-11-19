@@ -8,6 +8,9 @@ An Online Food Ordering System developed using PHP, MySQL, HTML, CSS, and JavaSc
 **Visit Website:**  
 https://vipul.freedev.app/index.php
 
+## Project Report
+https://drive.google.com/file/d/1_bpCThkGeKLHL_1V2QC58Y8iCVKlYfZJ/view?usp=sharing
+
 ## 📌 About the Project
 
 The Online Food Ordering System is a web-based application designed to make food ordering easier and faster. Customers can browse available food items, select their favorite dishes, and place orders online.
